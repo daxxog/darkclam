@@ -3,7 +3,7 @@
   "description": "welcome to the desert of the real",
   "license": "Apache-2.0",
   "homepage": "https://github.com/daxxog/darkclam",
-  "main": "darkclam.min.js",
+  "main": "darkclam.js",
   "version": "0.0.1",
   "engines": {
     "node": ">=4.2.4"
@@ -40,6 +40,7 @@
     "darkclam": "bin/darkclam"
   },
   "dependencies": {
-    "colors": "^1.1.2"
+    "colors": "^1.1.2",
+    "ethereumjs-vm": "^1.2.1"
   }
 }

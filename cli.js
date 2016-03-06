@@ -5,6 +5,6 @@
  * http://www.apache.org/licenses/LICENSE-2.0.html  
  */
 
-var Darkclam = require('./darkclam.min.js');
+var Darkclam = require('./darkclam.js');
 
 new Darkclam();

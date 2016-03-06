@@ -1,0 +1,45 @@
+{
+  "name": "darkclam",
+  "description": "welcome to the desert of the real",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/daxxog/darkclam",
+  "main": "darkclam.min.js",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=4.2.4"
+  },
+  "maintainers": [
+    {
+      "name": "David Volm",
+      "email": "david@volminator.com",
+      "web": "http://daxxog.com/"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daxxog/darkclam.git"
+  },
+  "devDependencies": {
+    "bitfactory": "*",
+    "stoptime": "*",
+    "uglify-js": "*",
+    "vows": "*"
+  },
+  "scripts": {
+    "build": "node make.js; cat .gitignore | grep -v darkclam.min.js > .npmignore",
+    "test": "vows test/*",
+    "start": "node cli.js",
+    "prepublish": "npm run build"
+  },
+  "files": [
+    "cli.min.js",
+    "darkclam.min.js",
+    "bin/darkclam"
+  ],
+  "bin": {
+    "darkclam": "bin/darkclam"
+  },
+  "dependencies": {
+    "colors": "^1.1.2"
+  }
+}

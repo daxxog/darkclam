@@ -43,6 +43,7 @@
     "bitcore-lib": "^0.13.13",
     "colors": "^1.1.2",
     "ethereumjs-abi": "^0.4.0",
-    "ethereumjs-vm": "https://github.com/daxxog/ethereumjs-vm/tarball/logic-fix-1"
+    "ethereumjs-vm": "https://github.com/daxxog/ethereumjs-vm/tarball/logic-fix-1",
+    "web3": "^0.15.3"
   }
 }

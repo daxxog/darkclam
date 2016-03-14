@@ -27,13 +27,54 @@
         packageData = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'UTF-8')),
         Darkclam;
     
+    /* 
+        npm install -g ethereumjs-codesim
+        ethereumjs-codesim -C -f echo-test.sol --use-contract 'Echo' --callmethod 'Test(bytes32)' 'echo'
+        
+        TODO: translate this into a system for the CLAM blockchain
+        
+        The darkclam hypervisor manages:
+            * storage/memory management
+            * checkpoints / history
+            * magnet system
+            * eXtended/abi/cmd/json/system xajs
+            * gas management
+            * rpc system
+            * extended ABI system (new types)
+                Input - 
+                    Magnet - magnet links as data input
+                Output - 
+                    Function - an specially encoded function call, can be used to call code in other VMs
+            * dependencies
+            * x-vm communication
+        
+        where new DCVM(Buffer bytecode, Buffer trie, Object abi)
+            (note, this constructor is ussually called from the Hypervisor)
+            bytecode - The VM bytecode, loaded from the [package-name].vm file
+            trie - The previous VM state, a Patricia Merkle Tree expressed as a Buffer
+            abi - The abi definition as a JavaScript Object, loaded from the [package-name].json file
+        
+        DCVM.run(Object block, Integer index, Array args, Function cb(Buffer trie, Error err, Buffer return, Integer gasUsed, Array logs), Integer value)
+            (note, uses automatic ABI system, to make functions more dynamic)
+            block - the Block containing this transaction (encoded and sent to the Function)
+            index - the index of this transaction in the block (encoded and sent to the Function)
+            args[0] - The function name (entry point)
+            args[1 - ARG_LIMIT] - The arguments for the function (automatically encoded)
+            cb - 
+                trie - The next VM state (hypervisor manages confirmations with a run/rewind system backed by the checkpoint system), a Patricia Merkle Tree expressed as a Buffer; if err return lastState :)
+                err - Graceful failing for VMs
+                return - Buffer data to return to the Hypervisor (for x-vm communication and direct function calling)
+                gasused - Amount of gas used running the selected function, passed back to Hypervisor for x-vm communication
+                logs - An Array of logs spit out by the function code
+            value - The value transacted (default 0)
+    */
+    
     Darkclam = function() {
         this.package = packageData;
-        this.hello = new DCVM(new Buffer('6060604052610117806100126000396000f365020232f3a6535060606040526000357c01000000000000000000000000000000000000000000000000000000009004806330b67baa146100445761003f565b610007565b61005160048050506100bf565b60405180806020018281038252838181518152602001915080519060200190808383829060006004602084601f0104600f02600301f150905090810190601f1680156100b15780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6020604051908101604052806000815260200150604060405190810160405280600d81526020017f48656c6c6f2c20576f726c6421000000000000000000000000000000000000008152602001509050610114565b9056', 'hex'));
+        //this.vm = new Buffer('60606040526000357c0100000000000000000000000000000000000000000000000000000000900480634e7dc659146037576035565b005b604b60048080359060200190919050506061565b6040518082815260200191505060405180910390f35b60006000600050546040518082815260200191505060405180910390a0816000600050819055506000600050546040518082815260200191505060405180910390a081905060aa565b91905056', 'hex');
+        //fs.writeFileSync('vm.dat', this.vm);
+        this.hello = new DCVM(this.vm);
         console.log(colors.green.bgBlack('darkclam client v' + packageData['version']));
-        /*this.hello.run(new Buffer('hello world', 'utf8'), function() {
-            console.log(arguments, typeof arguments[1].exception);
-        });*/
     };
     
     return Darkclam;
